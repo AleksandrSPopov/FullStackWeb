@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Test page</title>
+  </head>
+  <body>
+    <h1
+      style="color: green; text-align: center; border-bottom: 2px solid green"
+    >
+      This is my test page
+    </h1>
+    <button
+      type="button"
+      onclick="document.getElementById('demoFirst').innerHTML=Date()"
+    >
+      Click me to display Date and Time
+    </button>
+    <p id="demoFirst"></p>
+
+    <button type="button" onclick="FirstFunction()">Click Me!</button>
+    <p id="demoSecond">This is a demonstration.</p>
+    <script>
+      function FirstFunction() {
+        document.getElementById("demoSecond").innerHTML = "Hello, JavaScript!";
+      }
+    </script>
+
+    <p>Please input a number between 1 and 10:</p>
+    <input type="number" id="numb" />
+    <button type="button" onclick="ThirdFunction()">Submit</button>
+    <p id="demoNum"></p>
+    <script>
+      function ThirdFunction() {
+        var x, text;
+        //Получаем значение поля с атрибутом id="numb"
+        x = document.getElementById("numb").value;
+
+        //Если "Х" не является числом или меньше 1 или больше 10, выводим сообщение об ошибке
+        if (isNaN(x) || x < 1 || x > 10) {
+          text = "Input not valid";
+        } else {
+          text = "Input OK";
+        }
+        document.getElementById("demoNum").innerHTML = text;
+      }
+    </script>
+  </body>
+</html>
