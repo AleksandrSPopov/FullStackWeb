@@ -5,7 +5,7 @@ article {
   border: 2px solid black;
   padding: 5px;
   margin: auto;
-  height: 170px;
+  height: 140px;
 }
 
 table {
@@ -34,4 +34,10 @@ th {
 #acceleration,
 #topspeed {
   text-align: center;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 }
