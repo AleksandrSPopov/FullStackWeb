@@ -6,19 +6,21 @@
   <title>Аренда авто в СПб</title>
   <link rel="stylesheet" href="style.css" />
 </head>
+<div>
+  <header>
+    <h1 class="head">ООО "ГАЗвПОЛ" - аренда автомобилей в Санкт-Петербурге +7(812)555-55-55</h1>
+  </header>
+</div>
 
 <body>
-  <header>
-    <h1>ООО "ГАЗвПОЛ" - аренда автомобилей в Санкт-Петербурге +7(812)555-55-55</h1>
-  </header>
   <main>
-    <section>
+    <section class="section">
       <article>
         <div>
           <h3>Условия аренды</h3>
-          <p>
-            Автомобилем может управлять любое лицо, указанное при оформлении
-            договора аренды. Необходимо иметь удостоверение личности, возраст от 18 лет и стаж вождения от 1 месяца.
+          <p class="rentalterms">
+            Автомобилем может управлять любое лицо по
+            договору аренды. Необходимо иметь удостоверение личности, возраст от 18 лет и стаж вождения от 1 месяца.
             <a href="rentalterms.html">Подробнее...</a>
           </p>
         </div>
@@ -54,59 +56,87 @@
       </article>
     </section>
 
-    <h3>Технические характеристики популярных автомобилей</h3>
-    <table>
-      <tr>
-        <td>Марка и модель</td>
-        <td>Коробка передач</td>
-        <td>Объем двигателя, л</td>
-        <td>Мощность двигателя, лс</td>
-        <td>Разгон от 0 до 100 км/ч, с</td>
-        <td>Максимальная скорость, км/ч</td>
-      </tr>
-      <tr>
-        <td>BMW M5</td>
-        <td>Автоматическая</td>
-        <td id="engine">3.0</td>
-        <td id="power" rowspan="2">250</td>
-        <td id="acceleration">6.5</td>
-        <td id="topspeed">250</td>
-      </tr>
-      <tr>
-        <td>Ford Mustang</td>
-        <td>Автоматическая</td>
-        <td id="engine">5.0</td>
-        <td id="acceleration">6.0</td>
-        <td id="topspeed">280</td>
-      </tr>
-      <tr>
-        <td>Ferrary 458 Italia</td>
-        <td>Автоматическая</td>
-        <td id="engine">4.5</td>
-        <td id="power">570</td>
-        <td id="acceleration">3.4</td>
-        <td id="topspeed">325</td>
-      </tr>
-      <tr>
-        <td>Nissan Skyline</td>
-        <td>Автоматическая</td>
-        <td id="engine">3.8</td>
-        <td id="power">550</td>
-        <td id="acceleration">2.8</td>
-        <td id="topspeed">320</td>
-      </tr>
-      <tr>
-        <td>ГАЗ 21 Волга</td>
-        <td>Механическая</td>
-        <td id="engine">2.4</td>
-        <td id="power">70</td>
-        <td id="acceleration" colspan="2">-</td>
-      </tr>
-    </table>
+    <section class="photo">
+      <article class="articlephoto">
+        <div>
+          <img src="images/M5.jpeg" alt="M5" width="380" height="180">
+        </div>
+      </article>
+      <article class="articlephoto">
+        <div>
+            <img src="images/mustang.jpeg" alt="mustang" width="380" height="180">
+        </div>
+      </article>
+      <article class="articlephoto">
+        <div>
+            <img src="images/458.jpeg" alt="458" width="380" height="180">
+        </div>
+      </article>
+      <article class="articlephoto">
+        <div>
+            <img src="images/gtr.jpeg" alt="gtr" width="380" height="180">
+        </div>
+      </article>
+    </section>
+
+    <h3 class="tablename">Технические характеристики популярных автомобилей</h3>
+    <div class="table">
+      <table>
+        <tr>
+          <td>Марка и модель</td>
+          <td>Коробка передач</td>
+          <td>Объем двигателя, л</td>
+          <td>Мощность двигателя, лс</td>
+          <td>Разгон от 0 до 100 км/ч, с</td>
+          <td>Максимальная скорость, км/ч</td>
+        </tr>
+        <tr>
+          <td>BMW M5</td>
+          <td>Автоматическая</td>
+          <td id="engine">3.0</td>
+          <td id="power" rowspan="2">250</td>
+          <td id="acceleration">6.5</td>
+          <td id="topspeed">250</td>
+        </tr>
+        <tr>
+          <td>Ford Mustang</td>
+          <td>Автоматическая</td>
+          <td id="engine">5.0</td>
+          <td id="acceleration">6.0</td>
+          <td id="topspeed">280</td>
+        </tr>
+        <tr>
+          <td>Ferrary 458 Italia</td>
+          <td>Автоматическая</td>
+          <td id="engine">4.5</td>
+          <td id="power">570</td>
+          <td id="acceleration">3.4</td>
+          <td id="topspeed">325</td>
+        </tr>
+        <tr>
+          <td>Nissan Skyline</td>
+          <td>Автоматическая</td>
+          <td id="engine">3.8</td>
+          <td id="power">550</td>
+          <td id="acceleration">2.8</td>
+          <td id="topspeed">320</td>
+        </tr>
+        <tr>
+          <td>ГАЗ 21 Волга</td>
+          <td>Механическая</td>
+          <td id="engine">2.4</td>
+          <td id="power">70</td>
+          <td id="acceleration" colspan="2">-</td>
+        </tr>
+      </table>
+    </div>
   </main>
 </body>
 <footer>
-  <h3>ООО "ГАЗвПОЛ" г. Санкт-Петербург, ул. Скоростная, д. 200<br />In Cash We Trust</h3>
+  <div>
+    <h3 class="foot">ООО "ГАЗвПОЛ" г. Санкт-Петербург, ул. Скоростная, д. 200<br />In Cash We Trust</h3>
+  </div>
+
 </footer>
 
 </html>

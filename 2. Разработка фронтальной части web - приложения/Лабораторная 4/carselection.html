@@ -4,86 +4,101 @@
 <head>
   <meta charset="utf-8" />
   <title>Аренда авто в СПб</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
+<div>
+  <header>
+    <h1 class="head">ООО "ГАЗвПОЛ" - аренда автомобилей в Санкт-Петербурге +7(812)555-55-55</h1>
+  </header>
+</div>
 
 <body>
   <main>
-    <h3>Выбор автомобиля</h3>
+    <div class="pages">
+      <h3>Выбор автомобиля</h3>
+      <form action="contact" method="post">
+        <label for="user_name">Имя:</label>
+        <input type="text" pattern="^[а-яА-Я\s]+$" title="Введите имя на русском языке" id="user_name" name="user_name"
+          required placeholder="Введите ваше имя">
+        <br>
+        <br>
+        <label for="phone_number">Телефон:</label>
+        <input type="text" pattern="\+7\d{10}" title="+7(800)800-80-80" id="phone_number" name="pnone_number" required
+          placeholder="+7(800)800-80-80"></text>
+        <br>
+        <br>
+        <label for="email">Электронная почта:</label>
+        <input type="text" pattern="^\S+@\S+\.\S+$" title="user@example.com" id="email" name="email" required
+          placeholder="user@example.com"></text>
+        <br>
+        <br>
+        <label for="services&auto">Услуга и автомобиль:</label>
+        <select id="services&auto" required name="service&auto">
+          <option value="" selected disabled>Выберите...</option>
+          <optgroup label="Аренда спорткара">
+            <option value="М5">BMW M5</option>
+            <option value="458">Ferrary 458 Italia</option>
+            <option value="Mustang">Ford Mustang</option>
+            <option value="Skyline">Nissan Skyline</option>
+          <optgroup label="Аренда авто бизнес-класса">
+            <option value="W222">Mercedes S-class</option>
+            <option value="BMW7">BMW 7-series</option>
+            <option value="A8">Audi A8</option>
+            <option value="LS">Lexus LS</option>
+          <optgroup label="Аренда внедорожника">
+            <option value="Def">Land Rover Defender</option>
+            <option value="Range">Range Rover</option>
+            <option value="G63">Mercedes Gelendwagen</option>
+            <option value="Caddy">Cadillac Escalade</option>
+          <optgroup label="Аренда авто с водителем">
+            <option value="Maybach">Mercedes Maybach</option>
+            <option value="Spur">Bentley Flying Spur</option>
+            <option value="Phantom">Rolls-Royce Phantom</option>
+            <option value="Quattroporte">Maserati Quattroporte</option>
+        </select>
+        <br>
+        <br>
+        <label for="rentalperiod">Срок аренды:</label>
+        <br>
+        <br>
+        <label>
+          <input type="radio" name="period" required>
+          до 7 дней
+        </label>
+        <br>
+        <label>
+          <input type="radio" name="period">
+          до 14 дней
+        </label>
+        <br>
+        <label>
+          <input type="radio" name="period">
+          до 30 дней
+        </label>
+        <br>
+        <label>
+          <input type="radio" name="period">
+          до 90 дней
+        </label>
+        <br>
+        <label>
+          <input type="radio" name="period">
+          более 90 дней
+        </label>
+        <br>
+        <br>
+        <button class="button" type="submit" required>Отправить</button>
+      </form>
+      <br>
+      <br>
+      <a href="index.html">На главную...</a>
+    </div>
   </main>
-  <form action="contact" method="post">
-    <label for="user_name">Имя:</label>
-    <input type="text" pattern="^[а-яА-Я\s]+$" title="Введите имя на русском языке" id="user_name" name="user_name"
-      required placeholder="Введите ваше имя">
-    <br>
-    <br>
-    <label for="phone_number">Телефон:</label>
-    <input type="text" pattern="\+7\d{10}" title="+7(800)800-80-80" id="phone_number" name="pnone_number" required
-      placeholder="+7(800)800-80-80"></text>
-    <br>
-    <br>
-    <label for="email">Электронная почта:</label>
-    <input type="text" pattern="^\S+@\S+\.\S+$" title="user@example.com" id="email" name="email" required
-      placeholder="user@example.com"></text>
-    <br>
-    <br>
-    <label for="services&auto">Услуга и автомобиль:</label>
-    <select id="services&auto" required name="service&auto">
-      <option value="" selected disabled>Выберите...</option>
-      <optgroup label="Аренда спорткара">
-        <option value="М5">BMW M5</option>
-        <option value="458">Ferrary 458 Italia</option>
-        <option value="Mustang">Ford Mustang</option>
-        <option value="Skyline">Nissan Skyline</option>
-      <optgroup label="Аренда авто бизнес-класса">
-        <option value="W222">Mercedes S-class</option>
-        <option value="BMW7">BMW 7-series</option>
-        <option value="A8">Audi A8</option>
-        <option value="LS">Lexus LS</option>
-      <optgroup label="Аренда внедорожника">
-        <option value="Def">Land Rover Defender</option>
-        <option value="Range">Range Rover</option>
-        <option value="G63">Mercedes Gelendwagen</option>
-        <option value="Caddy">Cadillac Escalade</option>
-      <optgroup label="Аренда авто с водителем">
-        <option value="Maybach">Mercedes Maybach</option>
-        <option value="Spur">Bentley Flying Spur</option>
-        <option value="Phantom">Rolls-Royce Phantom</option>
-        <option value="Quattroporte">Maserati Quattroporte</option>
-    </select>
-    <br>
-    <br>
-    <label for="rentalperiod">Срок аренды:</label>
-    <br>
-    <br>
-    <label>
-      <input type="radio" name="period" required>
-      до 7 дней
-    </label>
-    <br>
-    <label>
-      <input type="radio" name="period">
-      до 14 дней
-    </label>
-    <br>
-    <label>
-      <input type="radio" name="period">
-      до 30 дней
-    </label>
-    <br>
-    <label>
-      <input type="radio" name="period">
-      до 90 дней
-    </label>
-    <br>
-    <label>
-      <input type="radio" name="period">
-      более 90 дней
-    </label>
-    <br>
-    <br>
-    <button type="submit" required>Отправить</button>
-  </form>
 </body>
-<footer></footer>
+<footer>
+  <div>
+    <h3 class="foot">ООО "ГАЗвПОЛ" г. Санкт-Петербург, ул. Скоростная, д. 200<br />In Cash We Trust</h3>
+  </div>
+</footer>
 
 </html>

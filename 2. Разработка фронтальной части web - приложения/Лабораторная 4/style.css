@@ -1,3 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+html {
+  font-family: 'Inter', sans-serif;
+}
+
+header {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  color: lightgray;
+  background-color: forestgreen;
+}
+
+.head {
+  padding-left: 20px;
+}
+
+body {
+  background-color: lightgray;
+}
+
+.section {
+  padding-top: 100px;
+  padding-left: 20px;
+
+}
+
+.section {
+  color: black;
+}
+
+.section:hover {
+  color: white;
+}
+
 article {
   vertical-align: top;
   max-width: 23%;
@@ -5,16 +42,51 @@ article {
   border: 2px solid black;
   padding: 5px;
   margin: auto;
-  height: 140px;
+  height: 160px;
+  padding-left: 20px;
+
 }
 
+.photo {
+  padding-top: 20px;
+  padding-left: 20px;
+
+}
+
+.articlephoto {
+  vertical-align: top;
+  max-width: 23%;
+  display: inline-block;
+  border: 2px solid black;
+  padding: 12px;
+  margin: auto;
+  height: 180px;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.tablename {
+  padding-left: 20px;
+}
+
+
+
+.table {
+  padding-left: 20px;
+}
+
+
+
 table {
-  width: 1100px;
+  width: 1200px;
   border-top: 7px solid rgb(0, 0, 0);
   border-collapse: collapse;
   text-align: center;
   margin-bottom: 20px;
+  margin-left: 20;
   border: 1px solid #dddddd;
+  padding-left: 20px;
 }
 
 td {
@@ -36,8 +108,51 @@ th {
   text-align: center;
 }
 
+.pages {
+  padding-top: 100px;
+  padding-left: 20px;
+
+}
+
+.rentalterms::before {
+  content: "!!!";
+  color: red;
+}
+
+.list li::after {
+  content: " +";
+  color: red;
+}
+
+.button {
+  color: black;
+}
+
+.button:focus {
+  color: green;
+}
+
+.cardelivery {
+  overflow-y: scroll;
+  width: 800px;
+  height: 60px;
+  padding: 5px;
+  border: solid 1px black;
+  background-color: white;
+}
+
 footer {
-  position: fixed;
+  position: absolute;
+  left: 0;
   bottom: 0;
   width: 100%;
+}
+
+footer {
+  color: #dddddd;
+  background-color: black;
+}
+
+.foot {
+  padding-left: 20px;
 }
