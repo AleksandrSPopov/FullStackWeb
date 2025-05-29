@@ -1,0 +1,13 @@
+#change {
+  width: 1300px;
+  height: 200px;
+  text-align: center;
+  resize: none;
+}
+
+#change {
+  color: darkgreen;
+  font-size: 20px;
+  text-decoration: underline;
+  font-weight: bold;
+}
