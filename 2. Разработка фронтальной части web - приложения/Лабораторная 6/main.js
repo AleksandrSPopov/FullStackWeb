@@ -7,7 +7,10 @@ function ChangeStyle() {
   element.style.fontWeight = "bold";
 }
 
-/*ChangeStyle();*/
+/*  ChangeStyle();*/
 
-element.addEventListener("mouseover", ChangeStyle);
-element.addEventListener("mouseout", ChangeStyle);
+var link = document.getElementById("link");
+
+link.addEventListener("mouseover", function () {
+  ChangeStyle();
+});
