@@ -9,12 +9,30 @@
 <div>
   <header>
     <h1 class="head">
-      Marketplace<input type="button" value="Каталог" onclick="window.location='catalog.html'"><textarea
-        id="textarea"></textarea></textarea><input type="button" value="Заказы"
-        onclick="window.location='orders.html'"></button>
+      <div id="mainheader" style="display: flex;">
+      <div id="name">Marketplace</div>
+      <!--Выпадающее меню-->
+      <div id="buttons">
+      <ul class="menu">
+        <li><a class="menu-trigger" href="#">Меню</a>
+          <ul class="submenu">
+            <li><a href="#">Распродажа</a></li>
+            <li><a href="#">Скидки</a></li>
+            <li><a href="#">Сертификаты</a></li>
+            <li><a href="#">Новинки</a></li>
+          </ul>
+        </li>
+      </ul>
+      </div>
+      <div>
+      <input type="button" value="Каталог" onclick="window.location='catalog.html'">
+      <textarea id="textarea"></textarea></textarea>
+      <input type="button" value="Заказы" onclick="window.location='orders.html'"></button>
       <input type="button" value="Избранное" onclick="window.location='favorites.html'"></button><input type="button"
         value="Корзина" onclick="window.location='cart.html'"></button><input type="button" value="Профиль"
         onclick="window.location='profile.html'"></button>
+      </div>
+      </div>
     </h1>
   </header>
 </div>
@@ -22,60 +40,59 @@
 <body>
   <main>
     <div id="category">
-    <div class="cat">
-      <h2>Категория 1</h2>
-      <p>Группа 1</p>
-      <p>Группа 2</p>
-      <p>Группа 3</p>
-      <p>Группа 4</p>
-      <p>Группа 5</p>
-    </div>
+      <div class="cat">
+        <h2>Категория 1</h2>
+        <p>Группа 1</p>
+        <p>Группа 2</p>
+        <p>Группа 3</p>
+        <p>Группа 4</p>
+        <p>Группа 5</p>
+      </div>
 
-    <div class="cat">
-      <h2>Категория 2</h2>
-      <p>Группа 1</p>
-      <p>Группа 2</p>
-      <p>Группа 3</p>
-      <p>Группа 4</p>
-      <p>Группа 5</p>
-    </div>
+      <div class="cat">
+        <h2>Категория 2</h2>
+        <p>Группа 1</p>
+        <p>Группа 2</p>
+        <p>Группа 3</p>
+        <p>Группа 4</p>
+        <p>Группа 5</p>
+      </div>
 
-    <div class="cat">
-      <h2>Категория 3</h2>
-      <p>Группа 1</p>
-      <p>Группа 2</p>
-      <p>Группа 3</p>
-      <p>Группа 4</p>
-      <p>Группа 5</p>
-    </div>
+      <div class="cat">
+        <h2>Категория 3</h2>
+        <p>Группа 1</p>
+        <p>Группа 2</p>
+        <p>Группа 3</p>
+        <p>Группа 4</p>
+        <p>Группа 5</p>
+      </div>
 
-    <div class="cat">
-      <h2>Категория 4</h2>
-      <p>Группа 1</p>
-      <p>Группа 2</p>
-      <p>Группа 3</p>
-      <p>Группа 4</p>
-      <p>Группа 5</p>
-    </div>
+      <div class="cat">
+        <h2>Категория 4</h2>
+        <p>Группа 1</p>
+        <p>Группа 2</p>
+        <p>Группа 3</p>
+        <p>Группа 4</p>
+        <p>Группа 5</p>
+      </div>
 
-    <div class="cat">
-      <h2>Категория 5</h2>
-      <p>Группа 1</p>
-      <p>Группа 2</p>
-      <p>Группа 3</p>
-      <p>Группа 4</p>
-      <p>Группа 5</p>
+      <div class="cat">
+        <h2>Категория 5</h2>
+        <p>Группа 1</p>
+        <p>Группа 2</p>
+        <p>Группа 3</p>
+        <p>Группа 4</p>
+        <p>Группа 5</p>
+      </div>
     </div>
-    </div>
-     <br>
-    <button onclick="AddCategory()">Добавить категорию</button>
     <footer>
-    <div>
-      <h3 class="foot"></h3>
-    </div>
-  </footer>
+      <div>
+        <h3 class="foot"></h3>
+      </div>
+    </footer>
   </main>
   <script src="./js/jquery-3.7.1.min.js"></script>
   <script src="./js/main.js"></script>
 </body>
+
 </html>

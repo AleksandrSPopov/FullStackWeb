@@ -18,13 +18,35 @@ header {
   padding-left: 20px;
 }
 
-input[type="mainbutton"] {
-  background-color: forestgreen;
-  color: white;
-  border: 1px;
-  width: 100px;
+#context {
+  position: absolute;
+  display: inline-block;
+  background-color: white;
+  border: 1px solid lightgray;
+  display: none;
+}
+
+.context-menu {
+  text-decoration: none;
+  list-style: none;
+  padding: 0px;
+  margin: 0px;
+}
+
+.context-menu a {
+  display: block;
+  text-decoration: none;
+  padding: 10px;
+  color: forestgreen;
+}
+
+.context-menu a:hover {
+  background-color: lightgray;
+}
+
+#name,
+#buttons {
   height: 50px;
-  font-size: large;
 }
 
 input[type="button"] {
@@ -38,26 +60,30 @@ input[type="button"] {
 
 .menu {
   list-style: none;
-  float: right;
-  background-color: forestgreen;
+  float: left;
   color: white;
   border: 1px;
-  width: 100px;
+  width: 60px;
   height: 50px;
   font-size: large;
   padding: 0;
+  text-align: left;
+  margin-top: 14px;
+  margin-left: 20px;
+
 }
 
 .menu-trigger {
-
-  background-color: forestgreen;
   color: white;
   border: 1px;
   width: 100px;
   height: 50px;
   font-size: large;
+  font-weight: lighter;
   text-align: center;
   padding: 0;
+  text-decoration: none;
+
 }
 
 .submenu {
@@ -66,12 +92,32 @@ input[type="button"] {
   color: white;
   background-color: white;
   border: 1px solid gray;
-  margin-top: 10px;
-  margin-right: 20px;
+  margin-top: 15px;
+  text-decoration: none;
+  position: absolute;
+  display: none;
+}
+
+.submenu.active {
+  display: block;
+}
+
+.submenu a {
+  text-decoration: none;
+  padding: 10px 20px;
+  display: block;
+  font-weight: 700;
+  color: forestgreen;
+  font-weight: normal;
+
+}
+
+.submenu a:hover {
+  background: lightgray;
 }
 
 #textarea {
-  width: 400px;
+  width: 800px;
   height: 30px;
   vertical-align: top;
   padding: 5px;

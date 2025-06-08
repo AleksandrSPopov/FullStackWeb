@@ -1,185 +1,205 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <title>Интернет-магазин</title>
-    <link rel="stylesheet" href="./css/style.css" />
-  </head>
-  <div>
-    <header>
-      <h1 class="head">
-        Marketplace
-        <input type="button" value="Каталог" onclick="window.location='catalog.html'">
-        <textarea id="textarea"></textarea></textarea>
-        <input type="button" value="Заказы" onclick="window.location='orders.html'"></button>
-        <input type="button" value="Избранное" onclick="window.location='favorites.html'"></button
-        ><input type="button" value="Корзина" onclick="window.location='cart.html'"></button
-        ><input type="button" value="Профиль" onclick="window.location='profile.html'"></button>
-        <ul class="menu">
-          <li><a class="menu-trigger" href="#">Menu</a></li>
-          <ul class="submenu">
-            <li><a href="#">Menu 1</a></li>
-            <li><a href="#">Menu 2</a></li>
-            <li><a href="#">Menu 3</a></li>
-            <li><a href="#">Menu 4</a></li>
-          </ul>
-        </ul>
-      </h1>
-    </header>
-  </div>
 
-  <body>
-    <main>
-      <section class="section">
-        <article>
-          <div>
-        <h3>Карточка товара</h3>
-          </div>
-        </article>
-        <article>
-          <div>
-            <h3>Карточка товара</h3>
-            <p>
-              
-            </p>
-          </div>
-        </article>
-        <article>
-          <div>
-            <h3>Карточка товара</h3>
-            <p>
-             
-            </p>
-          </div>
-        </article>
-        <article>
-          <div>
-            <h3>Карточка товара</h3>
-            <p>
-             
-            </p>
-          </div>
-        </article>
-        <article>
-          <div>
-            <h3>Карточка товара</h3>
-            <p>
-             
-            </p>
-          </div>
-        </article>
-        <article>
-          <div>
-            <h3>Карточка товара</h3>
-            <p>
-             
-            </p>
-          </div>
-        </article>
+<head>
+  <meta charset="utf-8" />
+  <title>Интернет-магазин</title>
+  <link rel="reset" href="./css/reset.css" />
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<div>
+  <header>
+    <h1 class="head">
+      <div id="mainheader" style="display: flex;">
+      <div id="name">Marketplace</div>
+      <!--Выпадающее меню-->
+      <div id="buttons">
+      <ul class="menu">
+        <li><a class="menu-trigger" href="#">Меню</a>
+          <ul class="submenu">
+            <li><a href="#">Распродажа</a></li>
+            <li><a href="#">Скидки</a></li>
+            <li><a href="#">Сертификаты</a></li>
+            <li><a href="#">Новинки</a></li>
+          </ul>
+        </li>
+      </ul>
+      </div>
+      <div>
+      <input type="button" value="Каталог" onclick="window.location='catalog.html'">
+      <textarea id="textarea"></textarea></textarea>
+      <input type="button" value="Заказы" onclick="window.location='orders.html'"></button>
+      <input type="button" value="Избранное" onclick="window.location='favorites.html'"></button><input type="button"
+        value="Корзина" onclick="window.location='cart.html'"></button><input type="button" value="Профиль"
+        onclick="window.location='profile.html'"></button>
+      </div>
+      </div>
+    </h1>
+  </header>
+</div>
+
+<body>
+  <main>
+    <section class="section">
       <article>
-          <div>
-            <h3>Карточка товара</h3>
-            <p>
-             
-            </p>
-          </div>
-        </article>
-        <article>
-          <div>
-            <h3>Карточка товара</h3>
-            <p>
-             
-            </p>
-          </div>
-        </article>
-        <article>
-          <div>
-            <h3>Карточка товара</h3>
-            <p>
-             
-            </p>
-          </div>
-        </article>
-        <article>
-          <div>
-            <h3>Карточка товара</h3>
-            <p>
-             
-            </p>
-          </div>
-        </article>
-        <article>
-          <div>
-            <h3>Карточка товара</h3>
-            <p>
-             
-            </p>
-          </div>
-        </article>
-        <article>
-          <div>
-            <h3>Карточка товара</h3>
-            <p>
-             
-            </p>
-          </div>
-        </article>
-        <article>
-          <div>
-            <h3>Карточка товара</h3>
-            <p>
-             
-            </p>
-          </div>
-        </article>
-        <article>
-          <div>
-            <h3>Карточка товара</h3>
-            <p>
-             
-            </p>
-          </div>
-        </article>
-        <article>
-          <div>
-            <h3>Карточка товара</h3>
-            <p>
-             
-            </p>
-          </div>
-        </article>
-        <article>
-          <div>
-            <h3>Карточка товара</h3>
-            <p>
-             
-            </p>
-          </div>
-        </article>
-        <article>
-          <div>
-            <h3>Карточка товара</h3>
-            <p>
-             
-            </p>
-          </div>
-        </article>
-        <article>
-          <div>
-            <h3>Карточка товара</h3>
-            <p>
-             
-            </p>
-          </div>
-        </article>
-      </section>
-      <footer>
-    <div>
-      <h3 class="foot"></h3>
+        <div>
+          <h3>Карточка товара</h3>
+        </div>
+      </article>
+      <article>
+        <div>
+          <h3>Карточка товара</h3>
+          <p>
+
+          </p>
+        </div>
+      </article>
+      <article>
+        <div>
+          <h3>Карточка товара</h3>
+          <p>
+
+          </p>
+        </div>
+      </article>
+      <article>
+        <div>
+          <h3>Карточка товара</h3>
+          <p>
+
+          </p>
+        </div>
+      </article>
+      <article>
+        <div>
+          <h3>Карточка товара</h3>
+          <p>
+
+          </p>
+        </div>
+      </article>
+      <article>
+        <div>
+          <h3>Карточка товара</h3>
+          <p>
+
+          </p>
+        </div>
+      </article>
+      <article>
+        <div>
+          <h3>Карточка товара</h3>
+          <p>
+
+          </p>
+        </div>
+      </article>
+      <article>
+        <div>
+          <h3>Карточка товара</h3>
+          <p>
+
+          </p>
+        </div>
+      </article>
+      <article>
+        <div>
+          <h3>Карточка товара</h3>
+          <p>
+
+          </p>
+        </div>
+      </article>
+      <article>
+        <div>
+          <h3>Карточка товара</h3>
+          <p>
+
+          </p>
+        </div>
+      </article>
+      <article>
+        <div>
+          <h3>Карточка товара</h3>
+          <p>
+
+          </p>
+        </div>
+      </article>
+      <article>
+        <div>
+          <h3>Карточка товара</h3>
+          <p>
+
+          </p>
+        </div>
+      </article>
+      <article>
+        <div>
+          <h3>Карточка товара</h3>
+          <p>
+
+          </p>
+        </div>
+      </article>
+      <article>
+        <div>
+          <h3>Карточка товара</h3>
+          <p>
+
+          </p>
+        </div>
+      </article>
+      <article>
+        <div>
+          <h3>Карточка товара</h3>
+          <p>
+
+          </p>
+        </div>
+      </article>
+      <article>
+        <div>
+          <h3>Карточка товара</h3>
+          <p>
+
+          </p>
+        </div>
+      </article>
+      <article>
+        <div>
+          <h3>Карточка товара</h3>
+          <p>
+
+          </p>
+        </div>
+      </article>
+      <article>
+        <div>
+          <h3>Карточка товара</h3>
+          <p>
+
+          </p>
+        </div>
+      </article>
+    </section>
+    <!--Контекстное меню-->
+    <div id="context">
+      <ul class="context-menu">
+        <li><a href="#">Перейти к описанию</a></li>
+        <li><a href="#">Добавить в Избранное</a></li>
+        <li><a href="#">Добавить в Корзину</a></li>
+        <li><a href="#">Купить</a></li>
+      </ul>
     </div>
-  </footer>
-    </main>
-    <script src="./js/jquery-3.7.1.min.js"></script>
-    <script src="./js/main.js"></script>
-      </body>
+    <footer>
+      <div>
+        <h3 class="foot"></h3>
+      </div>
+    </footer>
+  </main>
+  <script src="./js/jquery-3.7.1.min.js"></script>
+  <script src="./js/main.js"></script>
+</body>
+
 </html>

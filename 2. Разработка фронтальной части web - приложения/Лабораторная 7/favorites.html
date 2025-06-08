@@ -8,11 +8,31 @@
   <div>
     <header>
       <h1 class="head">
-        Marketplace<input type="button" value="Каталог" onclick="window.location='catalog.html'"><textarea id="textarea"></textarea></textarea><input type="button" value="Заказы" onclick="window.location='orders.html'"></button>
-        <input type="button" value="Избранное" onclick="window.location='favorites.html'"></button
-        ><input type="button" value="Корзина" onclick="window.location='cart.html'"></button
-        ><input type="button" value="Профиль" onclick="window.location='profile.html'"></button>
-      </h1>
+      <div id="mainheader" style="display: flex;">
+      <div id="name">Marketplace</div>
+      <!--Выпадающее меню-->
+      <div id="buttons">
+      <ul class="menu">
+        <li><a class="menu-trigger" href="#">Меню</a>
+          <ul class="submenu">
+            <li><a href="#">Распродажа</a></li>
+            <li><a href="#">Скидки</a></li>
+            <li><a href="#">Сертификаты</a></li>
+            <li><a href="#">Новинки</a></li>
+          </ul>
+        </li>
+      </ul>
+      </div>
+      <div>
+      <input type="button" value="Каталог" onclick="window.location='catalog.html'">
+      <textarea id="textarea"></textarea></textarea>
+      <input type="button" value="Заказы" onclick="window.location='orders.html'"></button>
+      <input type="button" value="Избранное" onclick="window.location='favorites.html'"></button><input type="button"
+        value="Корзина" onclick="window.location='cart.html'"></button><input type="button" value="Профиль"
+        onclick="window.location='profile.html'"></button>
+      </div>
+      </div>
+    </h1>
     </header>
   </div>
 
