@@ -29,19 +29,30 @@
     <h1>Мои данные</h1>
     <br>
     <br>
-    <div id="mydata"></div>
-    <br>
-    <br>
-    <ul></ul>
-    <br>
-    <br>
-    <br>
-    <br>
+    <label for="key">Key:</label>
+    <input type="text" id="key" autofocus="" autocomplete="off">
+    <label for="value">Value:</label>
+    <input type="text" id="value" autocomplete="off">
+    <button onclick="save()">Save</button>
     <br>
     <br>
     <br>
-    <br>
-    <button onclick="AddData()">Добавить данные</button>
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>key</th>
+          <th>value</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody id="output">
+        <tr>
+          <td colspan="4">Nothing to Show</td>
+        </tr>
+      </tbody>
+    </table>
+    <button onclick="clearStorage()">Clear All</button>
   </main>
   <script src="./js/main.js"></script>
 </body>
