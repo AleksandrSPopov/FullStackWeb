@@ -15,7 +15,9 @@
       <input type="button" value="Избранное" onclick="window.location='favorites.html'"></button><input type="button"
         value="Корзина" onclick="window.location='cart.html'"></button><input type="button" value="Профиль"
         onclick="window.location='profile.html'"></button>
+      <label id="address">Адрес доставки:</label>
     </h1>
+    <div id="currentaddress" value=""></div>
   </header>
 </div>
 
@@ -29,30 +31,46 @@
     <h1>Мои данные</h1>
     <br>
     <br>
-    <label for="key">Key:</label>
-    <input type="text" id="key" autofocus="" autocomplete="off">
-    <label for="value">Value:</label>
-    <input type="text" id="value" autocomplete="off">
-    <button onclick="save()">Save</button>
     <br>
     <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <label for="address">Адрес доставки:</label>
+    <input type="text" pattern="^[а-яА-Я\s]+$" id="deliveryaddress" autofocus="" autocomplete="off" required
+      placeholder="Введите адрес">
+    <label for="notes">Примечание:</label>
+    <input type="text" pattern="^[а-яА-Я\s]+$" id="notes" autocomplete="off" required placeholder="Введите текст">
+    <button onclick="save()">Сохранить</button>
+    <br>
+    <br>
+    <hr>
     <br>
     <table>
       <thead>
         <tr>
           <th>#</th>
-          <th>key</th>
-          <th>value</th>
-          <th>Delete</th>
+          <th>Адрес доставки</th>
+          <th>Примечание</th>
         </tr>
       </thead>
       <tbody id="output">
-        <tr>
-          <td colspan="4">Nothing to Show</td>
-        </tr>
       </tbody>
     </table>
-    <button onclick="clearStorage()">Clear All</button>
+    <br>
+    <button onclick="clearStorage()">Очистить всё</button>
   </main>
   <script src="./js/main.js"></script>
 </body>

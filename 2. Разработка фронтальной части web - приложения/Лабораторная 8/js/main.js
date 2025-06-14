@@ -1,18 +1,3 @@
-/*--if (window.addEventListener) {
-  window.addEventListener("storage", handle_storage, false);
-} else {
-  window.attachEvent("onstorage", handle_storage);
-};
-
-Функция обратного вызова handle_storage будет вызвана с объектом StorageEvent, за исключением Internet Explorer 8, 
-где события хранятся в window.event.
-
-function handle_storage(e) {
-  if (!e) { e = window.event; }
-}
-  
-В данном случае переменная e будет объектом StorageEvent, который обладает свойствами key, oldValue, newValue и url.--*/
-
 window.addEventListener("load", updateTable, false);
 
 function updateTable() {
@@ -24,8 +9,7 @@ function updateTable() {
   if (localStorage.length == 0) {
     row = tbody.insertRow(i);
     cell = row.insertCell(0);
-    cell.colSpan = "4";
-    cell.innerHTML = "Nothing to Show";
+
   }
   for (var i = 0; i < localStorage.length; ++i) {
     row = tbody.insertRow(i);
@@ -41,20 +25,21 @@ function updateTable() {
 }
 
 function deleteItem(key) {
-  if (!confirm("Are you sure you want to delete this item?")) return;
+  if (!confirm("Удалить?")) return;
   localStorage.removeItem(key);
   updateTable();
 }
 
 function clearStorage() {
-  if (!confirm("Are you sure you want to delete all local storage for this domain?")) return;
+  if (!confirm("Очистить всё?")) return;
   localStorage.clear();
   updateTable();
 }
 
 function save() {
-  var key = document.getElementById("key").value;
-  var value = document.getElementById("value").value;
-  localStorage.setItem(key, value);
+  var address = document.getElementById("deliveryaddress").value;
+  var notes = document.getElementById("notes").value;
+  localStorage.setItem(address, notes);
   updateTable();
+  document.getElementById("currentaddress").textContent = address;
 }
