@@ -39,7 +39,7 @@ input[type="button"] {
   background-color: forestgreen;
   color: white;
   border: 1px;
-  width: 130px;
+  width: 140px;
   height: 50px;
   font-size: large;
 }
@@ -61,20 +61,16 @@ input[type="button"] {
 
 /* MAIN */
 
-
-.main {
-  flex: 1 1 auto;
-}
-
 .article-section {
   padding-top: 100px;
   border-radius: 30%;
   color: gray;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 article {
-  vertical-align: top;
-  display: inline-block;
+  vertical-align: top; 
   border: 0px solid lightgray;
   padding-top: 10px;
   margin: 10px;
@@ -86,6 +82,7 @@ article {
 .article-image {
   height: 180px;
   width: 100%;
+  display: flex;
   background-size: cover !important;
   background-position: center !important;
 }
@@ -95,6 +92,7 @@ article {
   height: 25px;
   border: 0px solid gray;
   color: black;
+  display: flex;
   text-align: center;
   justify-content: center;
   padding-top: 10px;
