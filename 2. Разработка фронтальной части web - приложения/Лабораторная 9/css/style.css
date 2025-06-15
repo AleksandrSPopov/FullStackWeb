@@ -4,43 +4,10 @@ html {
   font-family: "Inter", sans-serif;
 }
 
-header {
-  position: fixed;
-  left: 0;
-  top: 0;
+html,
+body {
   width: 100%;
-  color: white;
-  background-color: forestgreen;
-  z-index: 1000;
-}
-
-.head {
-  padding-left: 20px;
-}
-
-input[type="mainbutton"] {
-  background-color: forestgreen;
-  color: white;
-  border: 1px;
-  width: 100px;
-  height: 50px;
-  font-size: large;
-}
-
-input[type="button"] {
-  background-color: forestgreen;
-  color: white;
-  border: 1px;
-  width: 100px;
-  height: 50px;
-  font-size: large;
-}
-
-#textarea {
-  width: 600px;
-  height: 30px;
-  vertical-align: top;
-  padding: 5px;
+  height: 100%;
 }
 
 body {
@@ -48,12 +15,119 @@ body {
   color: black;
 }
 
-.section {
+.container {
+  max-width: 1180px;
+  margin: 0px auto;
+}
+
+.wrapper {
+  min-height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* HEADER */
+
+.header {
+  background-color: forestgreen;
+  position: fixed;
+  width: 100%;
+}
+
+input[type="button"] {
+  background-color: forestgreen;
+  color: white;
+  border: 1px;
+  width: 130px;
+  height: 50px;
+  font-size: large;
+}
+
+#textarea {
+  width: 600px;
+  height: 30px;
+  padding: 5px;
+  font-size: 20px;
+  align-content: center;
+}
+
+.header-row {
+  display: flex;
+  height: 100px;
+  align-items: center;
+}
+
+
+/* MAIN */
+
+
+.main {
+  flex: 1 1 auto;
+}
+
+.article-section {
   padding-top: 100px;
-  padding-left: 10px;
   border-radius: 30%;
   color: gray;
 }
+
+article {
+  vertical-align: top;
+  display: inline-block;
+  border: 0px solid lightgray;
+  padding-top: 10px;
+  margin: 10px;
+  height: 250px;
+  background-color: white;
+  border-radius: 3%;
+}
+
+.article-image {
+  height: 180px;
+  width: 100%;
+  background-size: cover !important;
+  background-position: center !important;
+}
+
+.article-description {
+  width: 150px;
+  height: 25px;
+  border: 0px solid gray;
+  color: black;
+  text-align: center;
+  justify-content: center;
+  padding-top: 10px;
+}
+
+.article-price {
+  width: 150px;
+  height: 25px;
+  border: 0px solid gray;
+  color: forestgreen;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* FOOTER */
+
+.footer {
+  background-color: forestgreen;
+}
+
+.footer-row {
+  display: flex;
+  height: 100px;
+  justify-content: left;
+  align-items: center;
+}
+
+.footer-text {
+  color: white;
+}
+
+/* OTHER PAGES*/ 
 
 .cat {
   display: inline-block;
@@ -65,32 +139,4 @@ body {
 .orders {
   padding-top: 100px;
   padding-left: 50px;
-}
-
-article {
-  vertical-align: top;
-  display: inline-block;
-  border: 2px solid lightgray;
-  padding: 15px;
-  margin: 10px;
-  height: 250px;
-  background-color: rgb(241, 239, 239);
-  border-radius: 3%;
-}
-
-.photo {
-  padding-top: 20px;
-  padding-left: 20px;
-}
-
-.articlephoto {
-  vertical-align: top;
-  max-width: 23%;
-  display: inline-block;
-  border: 2px solid black;
-  padding: 12px;
-  margin: auto;
-  height: 180px;
-  justify-content: center;
-  align-items: center;
 }

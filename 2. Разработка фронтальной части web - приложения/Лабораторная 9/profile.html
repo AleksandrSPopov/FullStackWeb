@@ -1,52 +1,43 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-  <meta charset="utf-8" />
-  <title>Личный кабинет</title>
-  <link rel="stylesheet" href="./css/style.css" />
-</head>
-<div>
-  <header>
-    <h1 class="head">
-      Marketplace<input type="button" value="Каталог" onclick="window.location='catalog.html'"><textarea
-        id="textarea"></textarea></textarea><input type="button" value="Заказы"
-        onclick="window.location='orders.html'"></button>
-      <input type="button" value="Избранное" onclick="window.location='favorites.html'"></button><input type="button"
-        value="Корзина" onclick="window.location='cart.html'"></button><input type="button" value="Профиль"
-        onclick="window.location='profile.html'"></button>
-    </h1>
-  </header>
-</div>
-
-<body>
-  <main>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <h1>Мои данные</h1>
-    <br>
-    <br>
-    <div id="mydata"></div>
-    <br>
-    <br>
-       <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-  </main>
-  <script src="./js/main.js"></script>
-</body>
-<footer>
-  <div>
-    <h3 class="foot"></h3>
+  <head>
+    <meta charset="utf-8" />
+    <title>Marketplace</title>
+    <link rel="stylesheet" href="./css/reset.css"/>
+    <link rel="stylesheet" href="./css/style.css"/>
+  </head>
+  <body>
+<div class="wrapper">
+<header class="header">
+  <div class="container">
+<div class="header-row">
+        <input type="button" value="MARKETPLACE" onclick="window.location='index.html'"></button> 
+        <input type="button" value="Каталог" onclick="window.location='catalog.html'"></button>
+        <textarea id="textarea"></textarea>
+        <input type="button" value="Заказы" onclick="window.location='orders.html'"></button>
+        <input type="button" value="Избранное" onclick="window.location='favorites.html'"></button
+        ><input type="button" value="Корзина" onclick="window.location='cart.html'"></button
+        ><input type="button" value="Профиль" onclick="window.location='profile.html'"></button>
   </div>
-</footer>
-
+</div>
+</header>
+<main class="main">
+<div class="container">
+      <section class="article-section">
+       
+      </section>
+</div>
+</main>
+</div>
+        <script src="./js/main.js"></script>
+      </body>
+  <footer class="footer">
+    <div class="container">
+    <div class="footer-row">
+      <div class="footer-text">
+        &copy; 2025
+      </div>
+    </div>
+    </div>
+  </footer>
 </html>
