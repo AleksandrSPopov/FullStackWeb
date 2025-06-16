@@ -11,17 +11,36 @@
   <body>
 <div class="wrapper">
 <header class="header">
-  <div class="container">
-<div class="header-row">
-        <input type="button" value="MARKETPLACE" onclick="window.location='index.html'"></button> 
-        <input type="button" value="Каталог" onclick="window.location='catalog.html'"></button>
-        <textarea id="textarea"></textarea>
-        <input type="button" value="Заказы" onclick="window.location='orders.html'"></button>
-        <input type="button" value="Избранное" onclick="window.location='favorites.html'"></button
-        ><input type="button" value="Корзина" onclick="window.location='cart.html'"></button
-        ><input type="button" value="Профиль" onclick="window.location='profile.html'"></button>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">MARKETPLACE</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+          <a class="nav-link" href="#">Каталог</a>
+        </li>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Search"/>
+        <button class="btn btn-outline-success" type="submit">Поиск</button>
+      </form>
+      <li class="nav-item">
+          <a class="nav-link" href="#">Заказы</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Избранное</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Корзина</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Профиль</a>
+        </li>
+    </div>
   </div>
-</div>
+</nav>
 </header>
 <main class="main">
 <div class="container">
@@ -118,13 +137,10 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
         <script src="./js/main.js"></script>
       </body>
-  <footer class="footer">
-    <div class="container">
-    <div class="footer-row">
-      <div class="footer-text">
-        &copy; 2025
-      </div>
+      <div class="container">
+      <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top"> 
+      <div class="col-md-4 d-flex align-items-center"><a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1" aria-label="Bootstrap"> <svg class="bi" width="30" height="24" aria-hidden="true"><use xlink:href="#bootstrap"></use></svg> </a> <span class="mb-3 mb-md-0 text-body-secondary">© 2025 MARKETPLACE</span> </div> 
+      
+    </footer> 
     </div>
-    </div>
-  </footer>
 </html>
