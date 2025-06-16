@@ -1,0 +1,143 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
+html {
+  font-family: "Inter", sans-serif;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  background-color: white;
+  color: black;
+}
+
+.container {
+  max-width: 1180px;
+  margin: 0px auto;
+}
+
+.wrapper {
+  min-height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* HEADER */
+
+.header {
+  background-color: seagreen;
+  position: fixed;
+  width: 100%;
+}
+
+input[type="button"] {
+  background-color: seagreen;
+  color: white;
+  border: 1px;
+  width: 140px;
+  height: 50px;
+  font-size: large;
+}
+
+#textarea {
+  width: 600px;
+  height: 30px;
+  padding: 5px;
+  font-size: 20px;
+  align-content: center;
+}
+
+.header-row {
+  display: flex;
+  height: 100px;
+  align-items: center;
+}
+
+
+/* MAIN */
+
+
+.main {
+  flex: 1 1 auto;
+}
+
+.article-section {
+  padding-top: 100px;
+  border-radius: 30%;
+  color: gray;
+}
+
+article {
+  vertical-align: top;
+  display: inline-block;
+  border: 0px solid lightgray;
+  padding-top: 10px;
+  margin: 10px;
+  height: 250px;
+  background-color: white;
+  border-radius: 3%;
+}
+
+.article-image {
+  height: 180px;
+  width: 100%;
+  background-size: cover !important;
+  background-position: center !important;
+}
+
+.article-description {
+  width: 150px;
+  height: 25px;
+  border: 0px solid gray;
+  color: black;
+  text-align: center;
+  justify-content: center;
+  padding-top: 10px;
+}
+
+.article-price {
+  width: 150px;
+  height: 25px;
+  border: 0px solid gray;
+  color: seagreen;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* FOOTER */
+
+.footer {
+  background-color: seagreen;
+}
+
+.footer-row {
+  display: flex;
+  height: 100px;
+  justify-content: left;
+  align-items: center;
+}
+
+.footer-text {
+  color: white;
+}
+
+/* OTHER PAGES*/ 
+
+.cat {
+  display: inline-block;
+  padding-top: 100px;
+  padding-left: 50px;
+  font-size: medium;
+}
+
+.orders {
+  padding-top: 100px;
+  padding-left: 50px;
+}
