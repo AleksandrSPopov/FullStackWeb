@@ -30,10 +30,39 @@ body {
 /* HEADER */
 
 .header {
-  background-color: seagreen;
+  background-color: seagreen !important;
   position: fixed;
   width: 100%;
 }
+
+.bg-body-tertiary {
+  background-color: seagreen !important;
+}
+
+.navbar-brand {
+  color: white !important;
+}
+
+.navbar-nav {
+  --bs-nav-link-color: white;
+}
+
+.btn-outline-success {
+  --bs-btn-color: #fff;
+  --bs-btn-border-color: #198754;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #198754;
+  --bs-btn-hover-border-color: #fff;
+  --bs-btn-focus-shadow-rgb: 25, 135, 84;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #198754;
+  --bs-btn-active-border-color: #198754;
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #198754;
+  --bs-btn-disabled-bg: transparent;
+  --bs-btn-disabled-border-color: #198754;
+}
+
 
 input[type="button"] {
   background-color: seagreen;
@@ -78,7 +107,7 @@ article {
   border: 0px solid lightgray;
   padding-top: 10px;
   margin: 10px;
-  height: 250px;
+  height: 320px;
   background-color: white;
   border-radius: 3%;
 }
@@ -88,6 +117,7 @@ article {
   width: 100%;
   background-size: cover !important;
   background-position: center !important;
+
 }
 
 .article-description {
@@ -98,6 +128,7 @@ article {
   text-align: center;
   justify-content: center;
   padding-top: 10px;
+  padding-bottom: 25px;
 }
 
 .article-price {
@@ -109,12 +140,38 @@ article {
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-top: 10px;
+  padding-bottom: 20px;
+}
+
+.card-title {
+  text-align: center;
+
+}
+
+.card-text {
+  text-align: center;
+}
+
+.btn-primary {
+  background-color: seagreen;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-color: seagreen;
+   
+ 
 }
 
 /* FOOTER */
 
-.footer {
+.footer-container {
   background-color: seagreen;
+}
+
+.text-body-secondary {
+  --bs-text-opacity: 1;
+  color: white !important;
 }
 
 .footer-row {
@@ -128,7 +185,7 @@ article {
   color: white;
 }
 
-/* OTHER PAGES*/ 
+/* OTHER PAGES*/
 
 .cat {
   display: inline-block;
