@@ -30,42 +30,13 @@ body {
 /* HEADER */
 
 .header {
-  background-color: seagreen !important;
+  background-color: forestgreen;
   position: fixed;
   width: 100%;
 }
 
-.bg-body-tertiary {
-  background-color: seagreen !important;
-}
-
-.navbar-brand {
-  color: white !important;
-}
-
-.navbar-nav {
-  --bs-nav-link-color: white;
-}
-
-.btn-outline-success {
-  --bs-btn-color: #fff;
-  --bs-btn-border-color: #198754;
-  --bs-btn-hover-color: #fff;
-  --bs-btn-hover-bg: #198754;
-  --bs-btn-hover-border-color: #fff;
-  --bs-btn-focus-shadow-rgb: 25, 135, 84;
-  --bs-btn-active-color: #fff;
-  --bs-btn-active-bg: #198754;
-  --bs-btn-active-border-color: #198754;
-  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-  --bs-btn-disabled-color: #198754;
-  --bs-btn-disabled-bg: transparent;
-  --bs-btn-disabled-border-color: #198754;
-}
-
-
 input[type="button"] {
-  background-color: seagreen;
+  background-color: forestgreen;
   color: white;
   border: 1px;
   width: 140px;
@@ -90,24 +61,20 @@ input[type="button"] {
 
 /* MAIN */
 
-
-.main {
-  flex: 1 1 auto;
-}
-
 .article-section {
   padding-top: 100px;
   border-radius: 30%;
   color: gray;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 article {
-  vertical-align: top;
-  display: inline-block;
+  vertical-align: top; 
   border: 0px solid lightgray;
   padding-top: 10px;
   margin: 10px;
-  height: 320px;
+  height: 250px;
   background-color: white;
   border-radius: 3%;
 }
@@ -115,9 +82,9 @@ article {
 .article-image {
   height: 180px;
   width: 100%;
+  display: flex;
   background-size: cover !important;
   background-position: center !important;
-
 }
 
 .article-description {
@@ -125,53 +92,26 @@ article {
   height: 25px;
   border: 0px solid gray;
   color: black;
+  display: flex;
   text-align: center;
   justify-content: center;
   padding-top: 10px;
-  padding-bottom: 25px;
 }
 
 .article-price {
   width: 150px;
   height: 25px;
   border: 0px solid gray;
-  color: seagreen;
-  font-weight: 700;
+  color: forestgreen;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-top: 10px;
-  padding-bottom: 20px;
-}
-
-.card-title {
-  text-align: center;
-
-}
-
-.card-text {
-  text-align: center;
-}
-
-.btn-primary {
-  background-color: seagreen;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-color: seagreen;
-   
- 
 }
 
 /* FOOTER */
 
-.footer-container {
-  background-color: seagreen;
-}
-
-.text-body-secondary {
-  --bs-text-opacity: 1;
-  color: white !important;
+.footer {
+  background-color: forestgreen;
 }
 
 .footer-row {
@@ -185,7 +125,7 @@ article {
   color: white;
 }
 
-/* OTHER PAGES*/
+/* OTHER PAGES*/ 
 
 .cat {
   display: inline-block;
