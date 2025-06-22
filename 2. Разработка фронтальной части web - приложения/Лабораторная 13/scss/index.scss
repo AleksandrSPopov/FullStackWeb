@@ -1,0 +1,34 @@
+$containerWight: 200px;
+$containerHeight: 200px;
+$containerFontSize: 50px;
+$containerBgColor: orange;
+$amount: 30%;
+
+@mixin bgColorLighten($active) {
+    &:active {
+        background-color: lighten($containerBgColor, $amount);
+    }
+}
+
+@mixin sizeChange($hover) {
+    &:hover {
+        width: $containerWight/2;
+        height: $containerHeight/2;
+    }
+}
+
+.container1 {
+    width: $containerWight;
+    height: $containerHeight;
+    background-color: $containerBgColor;
+    font-size: $containerFontSize;
+    @include bgColorLighten(true)
+}
+
+.container2 {
+    width: $containerWight;
+    height: $containerHeight;
+    background-color: $containerBgColor;
+    font-size: $containerFontSize;
+    @include sizeChange(true)
+}
