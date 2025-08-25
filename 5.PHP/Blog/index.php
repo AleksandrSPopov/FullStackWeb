@@ -1,11 +1,31 @@
 <?php
-require_once 'data.php';
-require_once 'functions.php';
+/**
+ * Главная страница блога с MySQL
+ */
 
-$allArticles = getAllArticles();
-$stats = getBlogStats();
-$popularArticles = getPopularArticles(3);
-$recentArticles = getRecentArticles(5);
+require_once 'database/db_functions.php';
+
+// Получаем данные из БД
+$allArticles = getAllArticlesFromDB();
+$stats = getBlogStatsFromDB();
+
+// Функция для форматирования просмотров
+function formatViews($views) {
+    if ($views < 1000) return $views;
+    if ($views < 1000000) return round($views / 1000, 1) . 'K';
+    return round($views / 1000000, 1) . 'M';
+}
+
+// Функция для форматирования даты
+function formatDate($date) {
+    return date('d.m.Y', strtotime($date));
+}
+
+// Функция для создания превью
+function createExcerpt($text, $length = 150) {
+    if (strlen($text) <= $length) return $text;
+    return substr($text, 0, $length) . '...';
+}
 ?>
 
 <!DOCTYPE html>
@@ -21,6 +41,11 @@ $recentArticles = getRecentArticles(5);
         <div class="container">
             <h1>🚀 IT Blog</h1>
             <p>Статьи о современной веб-разработке</p>
+            <nav>
+                <a href="index.php">Главная</a>
+                <a href="search.php">Поиск</a>
+                <a href="admin.php">Админ</a>
+            </nav>
         </div>
     </header>
 
@@ -51,80 +76,50 @@ $recentArticles = getRecentArticles(5);
                 <input type="text" name="q" placeholder="Поиск статей..." class="search-input">
                 <button type="submit" class="search-btn">Найти</button>
             </form>
-            <p class="admin-link"><a href="admin.php">📝 Управление статьями</a></p>
         </section>
 
-        <!-- Популярные статьи -->
-        <?php if (!empty($popularArticles)): ?>
-        <section class="popular-section">
-            <h2>🔥 Популярные статьи</h2>
-            <div class="articles-grid">
-                <?php foreach ($popularArticles as $article): ?>
-                <article class="article-card popular">
-                    <div class="article-header">
-                        <h3 class="article-title">
-                            <a href="article.php?id=<?= $article['id'] ?>">
-                                <?= htmlspecialchars($article['title']) ?>
-                            </a>
-                        </h3>
-                        <p class="article-excerpt">
-                            <?= htmlspecialchars($article['excerpt']) ?>
-                        </p>
-                    </div>
-                    
-                    <div class="article-meta">
-                        <span>👤 <?= htmlspecialchars($article['author']['name']) ?></span>
-                        <span>📁 <?= htmlspecialchars($article['category']) ?></span>
-                        <span>📅 <?= formatDate($article['date']) ?></span>
-                    </div>
-                    
-                    <?= renderTags($article['tags']) ?>
-                    
-                    <div class="article-stats">
-                        <span>👁️ <?= formatViews($article['views']) ?></span>
-                        <span>⏱️ <?= $article['reading_time'] ?> мин</span>
-                    </div>
-                </article>
-                <?php endforeach; ?>
-            </div>
-        </section>
-        <?php endif; ?>
-
-        <!-- Все статьи -->
+        <!-- Статьи -->
         <section class="articles">
             <h2>📚 Все статьи</h2>
-            <div class="articles-grid">
-                <?php foreach ($allArticles as $article): ?>
-                <article class="article-card">
-                    <div class="article-header">
-                        <h3 class="article-title">
-                            <a href="article.php?id=<?= $article['id'] ?>">
-                                <?= htmlspecialchars($article['title']) ?>
-                            </a>
-                        </h3>
-                        <p class="article-excerpt">
-                            <?= htmlspecialchars($article['excerpt']) ?>
-                        </p>
-                    </div>
-                    
-                    <div class="article-meta">
-                        <span>👤 <?= htmlspecialchars($article['author']['name']) ?></span>
-                        <span>📁 <?= htmlspecialchars($article['category']) ?></span>
-                        <span>📅 <?= formatDate($article['date']) ?></span>
-                    </div>
-                    
-                    <div class="article-tags">
-                        <?= renderTags($article['tags']) ?>
-                    </div>
-                    
-                    <div class="article-stats">
-                        <span>👁️ <?= formatViews($article['views']) ?></span>
-                        <span>⏱️ <?= $article['reading_time'] ?> мин</span>
-                    </div>
-                </article>
-                <?php endforeach; ?>
-            </div>
+            
+            <?php if (empty($allArticles)): ?>
+                <p>Статьи не найдены. <a href="database/migrate_data.php">Выполнить миграцию данных</a></p>
+            <?php else: ?>
+                <div class="articles-grid">
+                    <?php foreach ($allArticles as $article): ?>
+                    <article class="article-card">
+                        <div class="article-header">
+                            <h3 class="article-title">
+                                <a href="article.php?id=<?= $article['id'] ?>">
+                                    <?= htmlspecialchars($article['title']) ?>
+                                </a>
+                            </h3>
+                            <p class="article-excerpt">
+                                <?= htmlspecialchars($article['excerpt']) ?>
+                            </p>
+                        </div>
+                        
+                        <div class="article-meta">
+                            <span>👤 <?= htmlspecialchars($article['author_name']) ?></span>
+                            <span>📁 <?= htmlspecialchars($article['category_name']) ?></span>
+                            <span>📅 <?= formatDate($article['created_at']) ?></span>
+                        </div>
+                        
+                        <div class="article-stats">
+                            <span>👁️ <?= formatViews($article['views']) ?></span>
+                            <span>⏱️ <?= $article['reading_time'] ?> мин</span>
+                        </div>
+                    </article>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
         </section>
     </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 IT Blog. Работает на MySQL!</p>
+        </div>
+    </footer>
 </body>
 </html>

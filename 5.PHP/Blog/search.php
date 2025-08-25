@@ -1,13 +1,29 @@
 <?php
-require_once 'data.php';
-require_once 'functions.php';
+/**
+ * Поиск статей с MySQL
+ */
+
+require_once 'database/db_functions.php';
 
 // Получаем поисковый запрос
 $query = isset($_GET['q']) ? trim($_GET['q']) : '';
 
 // Выполняем поиск
-$searchResults = searchArticles($query);
+$searchResults = [];
+if (!empty($query)) {
+    $searchResults = searchArticlesInDB($query);
+}
+
 $totalResults = count($searchResults);
+
+function formatDate($date) {
+    return date('d.m.Y', strtotime($date));
+}
+
+function formatViews($views) {
+    if ($views < 1000) return $views;
+    return round($views / 1000, 1) . 'K';
+}
 ?>
 
 <!DOCTYPE html>
@@ -72,15 +88,11 @@ $totalResults = count($searchResults);
                             </p>
                             
                             <div class="result-meta">
-                                <span>👤 <?= htmlspecialchars($article['author']['name']) ?></span>
-                                <span>📁 <?= htmlspecialchars($article['category']) ?></span>
-                                <span>📅 <?= formatDate($article['date']) ?></span>
+                                <span>👤 <?= htmlspecialchars($article['author_name']) ?></span>
+                                <span>📁 <?= htmlspecialchars($article['category_name']) ?></span>
+                                <span>📅 <?= formatDate($article['created_at']) ?></span>
                                 <span>👁️ <?= formatViews($article['views']) ?></span>
                                 <span>⏱️ <?= $article['reading_time'] ?> мин</span>
-                            </div>
-                            
-                            <div class="result-tags">
-                                <?= renderTags($article['tags']) ?>
                             </div>
                         </article>
                         <?php endforeach; ?>
@@ -100,18 +112,15 @@ $totalResults = count($searchResults);
                 
             <?php else: ?>
                 <div class="search-help">
-                    <h2>Как искать статьи?</h2>
-                    <p>Введите ключевые слова в поле выше. Поиск выполняется по заголовкам, содержимому и описаниям статей.</p>
-                    
-                    <h3>Популярные темы:</h3>
-                    <div class="popular-tags">
-                        <a href="?q=PHP" class="tag">PHP</a>
-                        <a href="?q=JavaScript" class="tag">JavaScript</a>
-                        <a href="?q=MySQL" class="tag">MySQL</a>
-                        <a href="?q=API" class="tag">API</a>
-                        <a href="?q=Backend" class="tag">Backend</a>
-                        <a href="?q=Frontend" class="tag">Frontend</a>
-                    </div>
+                    <h2>Поиск статей</h2>
+                    <p>Введите ключевые слова для поиска статей в нашем блоге.</p>
+                    <p><strong>Преимущества поиска с MySQL:</strong></p>
+                    <ul>
+                        <li>⚡ Быстрый поиск по всем полям</li>
+                        <li>🎯 Точные результаты</li>
+                        <li>📊 Сортировка по релевантности</li>
+                        <li>🔍 Поиск в заголовках, содержимом и описаниях</li>
+                    </ul>
                 </div>
             <?php endif; ?>
         </main>
