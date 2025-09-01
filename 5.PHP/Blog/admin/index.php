@@ -1,114 +1,109 @@
 <?php
-// admin.php - Обновленная админ-панель с авторизацией
-require_once 'auth.php';
-require_once '../functions.php';
+// admin/index.php - Админ-панель с использованием ООП подхода
+session_start();
+require_once '../autoload.php';
 
-// Проверяем авторизацию
-requireAdminAuth();
+use Blog\Controllers\AdminController;
+use Blog\Controllers\CommentController;
+use Blog\Repositories\ArticleRepository;
+use Blog\Repositories\CommentRepository;
+use Blog\Repositories\UserRepository;
+use Blog\Services\AuthService;
+use Blog\Services\HelperService;
 
-// Получаем данные администратора
-$currentAdmin = getCurrentAdmin();
-
-// Проверка подключения к БД
-$pdo = getDatabaseConnection();
-if (!$pdo) {
-    echo "<!DOCTYPE html><html><head><title>Ошибка подключения к БД</title></head><body>";
-    echo "<h1>❌ Ошибка подключения к базе данных</h1>";
-    echo "<p>Проверьте настройки в config/database.php или запустите <a href='database/migration.php'>миграцию данных</a></p>";
+try {
+    // Получаем подключение к БД
+    $pdo = getDatabaseConnection();
+    if (!$pdo) {
+        throw new Exception("Ошибка подключения к базе данных");
+    }
+    
+    // Создаем сервисы
+    $authService = new AuthService($pdo);
+    
+    // Проверяем авторизацию
+    $authService->requireAuth();
+    $authService->checkSessionTimeout();
+    
+    // Получаем данные администратора
+    $currentAdmin = $authService->getCurrentAdmin();
+    
+    // Создаем репозитории
+    $articleRepository = new ArticleRepository($pdo);
+    $commentRepository = new CommentRepository($pdo);
+    $userRepository = new UserRepository($pdo);
+    
+    // Создаем контроллеры
+    $adminController = new AdminController($articleRepository, $commentRepository, $userRepository);
+    
+    // Обработка действий
+    $message = '';
+    $error = '';
+    
+    // Создание новой статьи
+    if (isset($_POST['create'])) {
+        $result = $adminController->createArticle($_POST);
+        if ($result['success']) {
+            $message = $result['message'];
+        } else {
+            $error = $result['message'];
+        }
+    }
+    
+    // Обновление статьи
+    if (isset($_POST['update'])) {
+        $id = (int)$_POST['article_id'];
+        $result = $adminController->updateArticle($id, $_POST);
+        if ($result['success']) {
+            $message = $result['message'];
+        } else {
+            $error = $result['message'];
+        }
+    }
+    
+    // Удаление статьи
+    if (isset($_POST['delete'])) {
+        $id = (int)$_POST['article_id'];
+        $result = $adminController->deleteArticle($id);
+        if ($result['success']) {
+            $message = $result['message'];
+        } else {
+            $error = $result['message'];
+        }
+    }
+    
+    // Выход из системы
+    if (isset($_GET['logout'])) {
+        $authService->logout();
+        header('Location: login.php?message=logged_out');
+        exit;
+    }
+    
+    // Получение данных для отображения
+    $data = $adminController->index();
+    $allArticles = $data['articles'];
+    $authors = $data['authors'];
+    $categories = $data['categories'];
+    $stats = $data['stats'];
+    $pendingComments = $data['pendingComments'];
+    
+    // Если редактируем статью
+    $editingArticle = null;
+    if (isset($_GET['edit'])) {
+        $editingArticle = $adminController->getArticleForEdit((int)$_GET['edit']);
+        if (!$editingArticle) {
+            $error = 'Статья для редактирования не найдена';
+        }
+    }
+    
+} catch (Exception $e) {
+    echo "<!DOCTYPE html><html><head><title>Ошибка</title></head><body>";
+    echo "<h1>❌ Ошибка: " . htmlspecialchars($e->getMessage()) . "</h1>";
+    echo "<p>Проверьте настройки в config/database.php или запустите <a href='../database/migration.php'>миграцию данных</a></p>";
     echo "<p><a href='../index.php'>← Назад к главной</a></p>";
     echo "</body></html>";
     exit;
 }
-
-// Обработка действий
-$message = '';
-$error = '';
-
-// Создание новой статьи
-if (isset($_POST['create'])) {
-    
-        $articleData = [
-            'title' => sanitizeString($_POST['title']),
-            'content' => sanitizeHTML($_POST['content']),
-            'excerpt' => sanitizeString($_POST['excerpt']),
-            'author_id' => (int)$_POST['author_id'],
-            'category_id' => (int)$_POST['category_id'],
-            'reading_time' => (int)$_POST['reading_time'],
-            'tags' => array_filter(array_map('trim', explode(',', $_POST['tags']))),
-            'date' => $_POST['date'] ?? date('Y-m-d')
-        ];
-        
-        $errors = validateArticleData($articleData);
-        if (empty($errors)) {
-            $newId = createArticle($articleData);
-            if ($newId) {
-                $message = "Статья успешно создана с ID: $newId";
-            } else {
-                $error = 'Ошибка при создании статьи';
-            }
-        } else {
-            $error = implode(', ', $errors);
-        }
-    
-}
-
-// Обновление статьи
-if (isset($_POST['update'])) {
-
-        $id = (int)$_POST['article_id'];
-        $articleData = [
-            'title' => sanitizeString($_POST['title']),
-            'content' => sanitizeHTML($_POST['content']),
-            'excerpt' => sanitizeString($_POST['excerpt']),
-            'author_id' => (int)$_POST['author_id'],
-            'category_id' => (int)$_POST['category_id'],
-            'reading_time' => (int)$_POST['reading_time'],
-            'tags' => array_filter(array_map('trim', explode(',', $_POST['tags']))),
-            'date' => $_POST['date'] ?? date('Y-m-d')
-        ];
-        
-        $errors = validateArticleData($articleData);
-        if (empty($errors)) {
-            if (updateArticle($id, $articleData)) {
-                $message = "Статья ID $id успешно обновлена";
-            } else {
-                $error = 'Ошибка при обновлении статьи';
-            }
-        } else {
-            $error = implode(', ', $errors);
-        }
-    
-}
-
-// Удаление статьи
-if (isset($_POST['delete'])) {
-  
-        $id = (int)$_POST['article_id'];
-        if (deleteArticle($id)) {
-            $message = "Статья ID $id успешно удалена";
-        } else {
-            $error = 'Ошибка при удалении статьи';
-        }
-    
-}
-
-// Получение данных
-$allArticles = getAllArticles();
-$authors = getAuthors();
-$categories = getCategories();
-$editingArticle = null;
-
-// Если редактируем статью
-if (isset($_GET['edit'])) {
-    $editingArticle = getArticle((int)$_GET['edit']);
-    if (!$editingArticle) {
-        $error = 'Статья для редактирования не найдена';
-    }
-}
-
-// Получение статистики для dashboard
-$stats = getBlogStats();
-$pendingComments = getAllComments('pending');
 ?>
 
 <!DOCTYPE html>
@@ -381,7 +376,7 @@ $pendingComments = getAllComments('pending');
                 <p>Статей</p>
             </div>
             <div class="dashboard-card">
-                <h3><?php echo formatViews($stats['views']) ?></h3>
+                <h3><?php echo HelperService::formatViews($stats['views']) ?></h3>
                 <p>Просмотров</p>
             </div>
             <div class="dashboard-card">
@@ -400,7 +395,7 @@ $pendingComments = getAllComments('pending');
         <!-- Статус БД -->
         <div class="db-status">
             🗄️ Работаем с MySQL базой данных | 
-            <a href="config/database.php" style="color: #285e61;">Тест подключения</a>
+            <a href="../config/database.php" style="color: #285e61;">Тест подключения</a>
         </div>
         
         <main>
@@ -417,7 +412,6 @@ $pendingComments = getAllComments('pending');
                 <h2><?php echo $editingArticle ? 'Редактировать статью' : 'Создать новую статью' ?></h2>
                 
                 <form method="POST">
-                    <input type="hidden" name="csrf_token" value="<?php echo $csrfToken ?>">
                     <?php if ($editingArticle): ?>
                     <input type="hidden" name="article_id" value="<?php echo $editingArticle['id'] ?>">
                     <?php endif; ?>
@@ -444,8 +438,8 @@ $pendingComments = getAllComments('pending');
                         <select name="author_id" id="author_id" required>
                             <option value="">Выберите автора</option>
                             <?php foreach ($authors as $author): ?>
-                            <option value="<?php echo $author['id'] ?>" <?php echo ($editingArticle['author_id'] ?? '') == $author['id'] ? 'selected' : '' ?>>
-                                <?php echo htmlspecialchars($author['name']) ?> (<?php echo htmlspecialchars($author['email']) ?>)
+                            <option value="<?php echo $author->getId() ?>" <?php echo ($editingArticle['author_id'] ?? '') == $author->getId() ? 'selected' : '' ?>>
+                                <?php echo htmlspecialchars($author->getName()) ?> (<?php echo htmlspecialchars($author->getEmail()) ?>)
                             </option>
                             <?php endforeach; ?>
                         </select>
@@ -467,7 +461,7 @@ $pendingComments = getAllComments('pending');
                         <label for="tags">Теги (через запятую)</label>
                         <input type="text" name="tags" id="tags" 
                                placeholder="PHP, MySQL, Backend"
-                               value="<?php echo isset($editingArticle['tags']) ? htmlspecialchars(implode(', ', $editingArticle['tags'])) : '' ?>">
+                               value="<?php echo htmlspecialchars($editingArticle['tags'] ?? '') ?>">
                         <small style="color: #718096;">Пример: PHP, MySQL, Backend</small>
                     </div>
                     
@@ -505,7 +499,7 @@ $pendingComments = getAllComments('pending');
                     <h3>📝 Статей пока нет</h3>
                     <p>Создайте первую статью используя форму выше</p>
                     <p style="margin-top: 1rem;">
-                        <a href="database/migration.php" class="btn btn-secondary">🔄 Запустить миграцию данных</a>
+                        <a href="../database/migration.php" class="btn btn-secondary">🔄 Запустить миграцию данных</a>
                     </p>
                 </div>
                 <?php else: ?>
@@ -513,24 +507,24 @@ $pendingComments = getAllComments('pending');
                     <?php foreach ($allArticles as $article): ?>
                     <div class="article-item">
                         <div class="article-info">
-                            <h4><?php echo htmlspecialchars($article['title']) ?></h4>
+                            <h4><?php echo htmlspecialchars($article->getTitle()) ?></h4>
                             <p>
-                                👤 <?php echo htmlspecialchars($article['author']['name']) ?> | 
-                                📁 <?php echo htmlspecialchars($article['category']) ?> | 
-                                📅 <?php echo formatDate($article['date']) ?> | 
-                                👁️ <?php echo formatViews($article['views']) ?> |
-                                🏷️ <?php echo count($article['tags']) ?> тегов |
-                                💬 <?php echo getCommentsCount($article['id']) ?> комментариев
+                                👤 <?php echo htmlspecialchars($article->getAuthor()['name']) ?> | 
+                                📁 <?php echo htmlspecialchars($article->getCategory()) ?> | 
+                                📅 <?php echo HelperService::formatDate($article->getDate()) ?> | 
+                                👁️ <?php echo HelperService::formatViews($article->getViews()) ?> |
+                                🏷️ <?php echo count($article->getTags()) ?> тегов |
+                                💬 <?php echo $commentRepository->countByArticle($article->getId()) ?> комментариев
                             </p>
                         </div>
                         
                         <div class="article-actions">
-                            <a href="../article.php?id=<?php echo $article['id'] ?>" class="btn btn-secondary" title="Просмотр" target="_blank">👁️</a>
-                            <a href="index.php?edit=<?php echo $article['id'] ?>" class="btn btn-primary" title="Редактировать">✏️</a>
+                            <a href="../article.php?id=<?php echo $article->getId() ?>" class="btn btn-secondary" title="Просмотр" target="_blank">👁️</a>
+                            <a href="index.php?edit=<?php echo $article->getId() ?>" class="btn btn-primary" title="Редактировать">✏️</a>
                             
                             <form method="POST" style="display: inline;" 
-                                  onsubmit="return confirm('Вы уверены, что хотите удалить статью \'<?php echo htmlspecialchars($article['title']) ?>\'? Это действие нельзя отменить.');">
-                                <input type="hidden" name="article_id" value="<?php echo $article['id'] ?>">
+                                  onsubmit="return confirm('Вы уверены, что хотите удалить статью \'<?php echo htmlspecialchars($article->getTitle()) ?>\'? Это действие нельзя отменить.');">
+                                <input type="hidden" name="article_id" value="<?php echo $article->getId() ?>">
                                 <button type="submit" name="delete" class="btn btn-danger" title="Удалить">🗑️</button>
                             </form>
                         </div>
@@ -553,12 +547,6 @@ $pendingComments = getAllComments('pending');
             if (!readingTimeInput.value || readingTimeInput.value == 5) {
                 readingTimeInput.value = readingTime;
             }
-        });
-
-        // Автоматическое заполнение slug превью
-        document.getElementById('title').addEventListener('input', function() {
-            const title = this.value;
-            // Можно добавить превью slug
         });
         
         // Подтверждение удаления

@@ -1,76 +1,85 @@
 <?php
-// comments_admin.php - Админ-панель для модерации комментариев
-require_once 'auth.php';
-require_once '../functions.php';
+// admin/comments_admin.php - Модерация комментариев с использованием ООП подхода
+session_start();
+require_once '../autoload.php';
 
-// Проверяем авторизацию
-requireAdminAuth();
+use Blog\Controllers\CommentController;
+use Blog\Repositories\CommentRepository;
+use Blog\Services\AuthService;
+use Blog\Services\HelperService;
 
-// Получаем данные администратора
-$currentAdmin = getCurrentAdmin();
-
-// Проверка подключения к БД
-$pdo = getDatabaseConnection();
-if (!$pdo) {
-    echo "<!DOCTYPE html><html><head><title>Ошибка подключения к БД</title></head><body>";
-    echo "<h1>❌ Ошибка подключения к базе данных</h1>";
+try {
+    // Получаем подключение к БД
+    $pdo = getDatabaseConnection();
+    if (!$pdo) {
+        throw new Exception("Ошибка подключения к базе данных");
+    }
+    
+    // Создаем сервисы
+    $authService = new AuthService($pdo);
+    
+    // Проверяем авторизацию
+    $authService->requireAuth();
+    $authService->checkSessionTimeout();
+    
+    // Получаем данные администратора
+    $currentAdmin = $authService->getCurrentAdmin();
+    
+    // Создаем репозитории и контроллеры
+    $commentRepository = new CommentRepository($pdo);
+    $commentController = new CommentController($commentRepository);
+    
+    // Обработка действий с комментариями
+    $message = '';
+    $error = '';
+    
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $commentId = (int)($_POST['comment_id'] ?? 0);
+        $result = null;
+        
+        if (isset($_POST['approve'])) {
+            $result = $commentController->approve($commentId);
+        } elseif (isset($_POST['reject'])) {
+            $result = $commentController->reject($commentId);
+        } elseif (isset($_POST['delete'])) {
+            $result = $commentController->delete($commentId);
+        }
+        
+        if ($result) {
+            if ($result['success']) {
+                $message = $result['message'];
+            } else {
+                $error = $result['message'];
+            }
+        }
+    }
+    
+    // Выход из системы
+    if (isset($_GET['logout'])) {
+        $authService->logout();
+        header('Location: login.php?message=logged_out');
+        exit;
+    }
+    
+    // Получаем параметры фильтрации
+    $statusFilter = $_GET['status'] ?? 'pending';
+    $validStatuses = ['pending', 'approved', 'rejected', 'all'];
+    if (!in_array($statusFilter, $validStatuses)) {
+        $statusFilter = 'pending';
+    }
+    
+    // Получаем комментарии и статистику
+    $data = $commentController->getForModeration($statusFilter === 'all' ? null : $statusFilter);
+    $comments = $data['comments'];
+    $commentStats = $data['stats'];
+    
+} catch (Exception $e) {
+    echo "<!DOCTYPE html><html><head><title>Ошибка</title></head><body>";
+    echo "<h1>❌ Ошибка: " . htmlspecialchars($e->getMessage()) . "</h1>";
     echo "<p><a href='index.php'>← Назад в админку</a></p>";
     echo "</body></html>";
     exit;
 }
-
-// Обработка действий с комментариями
-$message = '';
-$error = '';
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Проверяем CSRF токен
-
-        $commentId = (int)($_POST['comment_id'] ?? 0);
-        
-        if (isset($_POST['approve'])) {
-            if (updateCommentStatus($commentId, 'approved')) {
-                $message = 'Комментарий одобрен';
-            } else {
-                $error = 'Ошибка при одобрении комментария';
-            }
-        } elseif (isset($_POST['reject'])) {
-            if (updateCommentStatus($commentId, 'rejected')) {
-                $message = 'Комментарий отклонен';
-            } else {
-                $error = 'Ошибка при отклонении комментария';
-            }
-        } elseif (isset($_POST['delete'])) {
-            if (deleteComment($commentId)) {
-                $message = 'Комментарий удален';
-            } else {
-                $error = 'Ошибка при удалении комментария';
-            }
-        }
-    
-}
-
-// Получаем параметры фильтрации
-$statusFilter = $_GET['status'] ?? 'pending';
-$validStatuses = ['pending', 'approved', 'rejected', 'all'];
-if (!in_array($statusFilter, $validStatuses)) {
-    $statusFilter = 'pending';
-}
-
-// Получаем комментарии
-if ($statusFilter === 'all') {
-    $comments = getAllComments();
-} else {
-    $comments = getAllComments($statusFilter);
-}
-
-// Получаем статистику комментариев
-$commentStats = [
-    'pending' => count(getAllComments('pending')),
-    'approved' => count(getAllComments('approved')),
-    'rejected' => count(getAllComments('rejected')),
-    'total' => count(getAllComments())
-];
 ?>
 
 <!DOCTYPE html>
@@ -448,7 +457,7 @@ $commentStats = [
                     <?php endif; ?>
                 </p>
                 <div style="margin-top: 1rem;">
-                    <a href="admin/index.php" class="btn btn-view">📄 Управление статьями</a>
+                    <a href="index.php" class="btn btn-view">📄 Управление статьями</a>
                     <a href="../index.php" class="btn btn-view" target="_blank">👁️ Просмотр сайта</a>
                 </div>
             </div>
@@ -457,16 +466,16 @@ $commentStats = [
             <div class="comment-moderation">
                 <div class="comment-header">
                     <div class="comment-author-info">
-                        <h4><?php echo htmlspecialchars($comment['author_name']) ?></h4>
+                        <h4><?php echo htmlspecialchars($comment->getAuthorName()) ?></h4>
                         <div class="comment-meta">
-                            📧 <?php echo htmlspecialchars($comment['author_email']) ?> • 
-                            📅 <?php echo formatDateTime($comment['created_at']) ?> • 
-                            📄 К статье: <a href="../article.php?id=<?php echo $comment['article_id'] ?>" target="_blank"><?php echo htmlspecialchars($comment['article_title']) ?></a>
+                            📧 <?php echo htmlspecialchars($comment->getAuthorEmail()) ?> • 
+                            📅 <?php echo HelperService::formatDateTime($comment->getCreatedAt()) ?> • 
+                            📄 К статье: <a href="../article.php?id=<?php echo $comment->getArticleId() ?>" target="_blank"><?php echo htmlspecialchars($comment->getArticleTitle()) ?></a>
                         </div>
                     </div>
-                    <div class="comment-status <?php echo $comment['status'] ?>">
+                    <div class="comment-status <?php echo $comment->getStatus() ?>">
                         <?php 
-                        switch ($comment['status']) {
+                        switch ($comment->getStatus()) {
                             case 'pending': echo '⏳ На модерации'; break;
                             case 'approved': echo '✅ Одобрен'; break;
                             case 'rejected': echo '❌ Отклонен'; break;
@@ -476,23 +485,22 @@ $commentStats = [
                 </div>
                 
                 <div class="comment-content">
-                    <?php echo nl2br(htmlspecialchars($comment['content'])) ?>
+                    <?php echo nl2br(htmlspecialchars($comment->getContent())) ?>
                 </div>
                 
                 <div class="comment-actions">
-                    <?php if ($comment['status'] !== 'approved'): ?>
+                    <?php if ($comment->getStatus() !== 'approved'): ?>
                     <form method="POST" style="display: inline;">
-                        <input type="hidden" name="comment_id" value="<?php echo $comment['id'] ?>">
+                        <input type="hidden" name="comment_id" value="<?php echo $comment->getId() ?>">
                         <button type="submit" name="approve" class="btn btn-approve">
                             ✅ Одобрить
                         </button>
                     </form>
                     <?php endif; ?>
                     
-                    <?php if ($comment['status'] !== 'rejected'): ?>
+                    <?php if ($comment->getStatus() !== 'rejected'): ?>
                     <form method="POST" style="display: inline;">
-                        <input type="hidden" name="csrf_token" value="<?php echo $csrfToken ?>">
-                        <input type="hidden" name="comment_id" value="<?php echo $comment['id'] ?>">
+                        <input type="hidden" name="comment_id" value="<?php echo $comment->getId() ?>">
                         <button type="submit" name="reject" class="btn btn-reject">
                             ❌ Отклонить
                         </button>
@@ -501,14 +509,13 @@ $commentStats = [
                     
                     <form method="POST" style="display: inline;" 
                           onsubmit="return confirm('Вы уверены, что хотите удалить этот комментарий? Это действие нельзя отменить.');">
-                        <input type="hidden" name="csrf_token" value="<?php echo $csrfToken ?>">
-                        <input type="hidden" name="comment_id" value="<?php echo $comment['id'] ?>">
+                        <input type="hidden" name="comment_id" value="<?php echo $comment->getId() ?>">
                         <button type="submit" name="delete" class="btn btn-delete">
                             🗑️ Удалить
                         </button>
                     </form>
                     
-                    <a href="../article.php?id=<?php echo $comment['article_id'] ?>#comments" target="_blank" class="btn btn-view">
+                    <a href="../article.php?id=<?php echo $comment->getArticleId() ?>#comments" target="_blank" class="btn btn-view">
                         👁️ Просмотреть
                     </a>
                 </div>
@@ -564,18 +571,6 @@ $commentStats = [
                 }
             }
         });
-        
-        // Автообновление количества комментариев на модерации
-        setInterval(() => {
-            fetch('comments_admin.php?ajax=stats')
-                .then(response => response.json())
-                .then(data => {
-                    // Обновляем счетчики (если добавлен AJAX endpoint)
-                })
-                .catch(err => {
-                    // Игнорируем ошибки автообновления
-                });
-        }, 30000); // каждые 30 секунд
     </script>
 </body>
 </html>

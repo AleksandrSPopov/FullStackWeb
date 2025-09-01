@@ -1,25 +1,45 @@
 <?php
-require_once 'functions.php';
+// search.php - Поиск с использованием ООП подхода
+require_once 'autoload.php';
 
-// Проверка подключения к БД
-$pdo = getDatabaseConnection();
-if (!$pdo) {
-    echo "<!DOCTYPE html><html><head><title>Ошибка подключения к БД</title></head><body>";
-    echo "<h1>❌ Ошибка подключения к базе данных</h1>";
+use Blog\Controllers\ArticleController;
+use Blog\Repositories\ArticleRepository;
+use Blog\Repositories\CommentRepository;
+use Blog\Repositories\UserRepository;
+use Blog\Services\HelperService;
+
+try {
+    // Получаем подключение к БД
+    $pdo = getDatabaseConnection();
+    if (!$pdo) {
+        throw new Exception("Ошибка подключения к базе данных");
+    }
+    
+    // Создаем репозитории
+    $articleRepository = new ArticleRepository($pdo);
+    $commentRepository = new CommentRepository($pdo);
+    $userRepository = new UserRepository($pdo);
+    
+    // Создаем контроллер
+    $articleController = new ArticleController($articleRepository, $commentRepository, $userRepository);
+    
+    // Получаем поисковый запрос
+    $query = isset($_GET['q']) ? trim($_GET['q']) : '';
+    
+    // Выполняем поиск через контроллер
+    $searchData = $articleController->search($query);
+    
+    $searchResults = $searchData['articles'];
+    $totalResults = $searchData['totalResults'];
+    $allTags = $searchData['allTags'];
+    
+} catch (Exception $e) {
+    echo "<!DOCTYPE html><html><head><title>Ошибка</title></head><body>";
+    echo "<h1>❌ Ошибка: " . htmlspecialchars($e->getMessage()) . "</h1>";
     echo "<p><a href='index.php'>← Назад к главной</a></p>";
     echo "</body></html>";
     exit;
 }
-
-// Получаем поисковый запрос
-$query = isset($_GET['q']) ? trim($_GET['q']) : '';
-
-// Выполняем поиск
-$searchResults = searchArticles($query);
-$totalResults = count($searchResults);
-
-// Получаем популярные теги для подсказок
-$allTags = getAllTags();
 ?>
 
 <!DOCTYPE html>
@@ -82,25 +102,25 @@ $allTags = getAllTags();
                         <?php foreach ($searchResults as $article): ?>
                         <article class="result-card">
                             <h3 class="result-title">
-                                <a href="article.php?id=<?php echo $article['id'] ?>">
-                                    <?php echo htmlspecialchars($article['title']) ?>
+                                <a href="article.php?id=<?php echo $article->getId() ?>">
+                                    <?php echo htmlspecialchars($article->getTitle()) ?>
                                 </a>
                             </h3>
                             
                             <p class="result-excerpt">
-                                <?php echo htmlspecialchars($article['excerpt']) ?>
+                                <?php echo htmlspecialchars($article->getExcerpt()) ?>
                             </p>
                             
                             <div class="result-meta">
-                                <span>👤 <?php echo htmlspecialchars($article['author']['name']) ?></span>
-                                <span>📁 <?php echo htmlspecialchars($article['category']) ?></span>
-                                <span>📅 <?php echo formatDate($article['date']) ?></span>
-                                <span>👁️ <?php echo formatViews($article['views']) ?></span>
-                                <span>⏱️ <?php echo $article['reading_time'] ?> мин</span>
+                                <span>👤 <?php echo htmlspecialchars($article->getAuthor()['name']) ?></span>
+                                <span>📁 <?php echo htmlspecialchars($article->getCategory()) ?></span>
+                                <span>📅 <?php echo HelperService::formatDate($article->getDate()) ?></span>
+                                <span>👁️ <?php echo HelperService::formatViews($article->getViews()) ?></span>
+                                <span>⏱️ <?php echo $article->getReadingTime() ?> мин</span>
                             </div>
                             
                             <div class="result-tags">
-                                <?php echo renderTags($article['tags']) ?>
+                                <?php echo HelperService::renderTags($article->getTags()) ?>
                             </div>
                         </article>
                         <?php endforeach; ?>
@@ -154,7 +174,7 @@ $allTags = getAllTags();
                     
                     <!-- Показываем последние статьи как альтернативу -->
                     <?php 
-                    $recentArticles = getRecentArticles(3);
+                    $recentArticles = $articleRepository->findAll(3);
                     if (!empty($recentArticles)): 
                     ?>
                     <h3 style="margin-top: 2rem;">📖 Последние статьи:</h3>
@@ -162,14 +182,14 @@ $allTags = getAllTags();
                         <?php foreach ($recentArticles as $article): ?>
                         <article class="article-card">
                             <h4>
-                                <a href="article.php?id=<?php echo $article['id'] ?>">
-                                    <?php echo htmlspecialchars($article['title']) ?>
+                                <a href="article.php?id=<?php echo $article->getId() ?>">
+                                    <?php echo htmlspecialchars($article->getTitle()) ?>
                                 </a>
                             </h4>
-                            <p><?php echo htmlspecialchars(substr($article['excerpt'], 0, 100)) ?>...</p>
+                            <p><?php echo htmlspecialchars(substr($article->getExcerpt(), 0, 100)) ?>...</p>
                             <div style="font-size: 0.9rem; color: #718096; margin-top: 0.5rem;">
-                                👤 <?php echo htmlspecialchars($article['author']['name']) ?> • 
-                                📅 <?php echo formatDate($article['date']) ?>
+                                👤 <?php echo htmlspecialchars($article->getAuthor()['name']) ?> • 
+                                📅 <?php echo HelperService::formatDate($article->getDate()) ?>
                             </div>
                         </article>
                         <?php endforeach; ?>
